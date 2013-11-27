@@ -47,7 +47,6 @@ var generateImage = function(form) {
     var run = function() {
         var formString = JSON.stringify(form);
         var options = {
-            host: Config.phantomServer.host,
             port: Config.phantomServer.port,
             path: '/',
             method: 'POST',
