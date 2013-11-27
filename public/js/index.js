@@ -31,8 +31,8 @@ $(function () {
             var output = JSON.stringify(data, null, '\t');
             $result.html(html);
             $output.find('pre').text(output);
-        }).fail(function() {
-            $result.html('error');
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            $result.html(errorThrown);
         });
     });
 });
