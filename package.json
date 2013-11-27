@@ -1,12 +1,16 @@
 {
-  "name": "HighImage",
+  "name": "Highcharts-to-image",
   "version": "0.0.1",
   "description": "Node service to render highchart charts as images.",
   "main": "index.js",
   "private": true,
   "scripts": {
     "test": "node_modules/.bin/mocha test/",
-    "start": "nodemon lib/highcharts/export.js 4000"
+    "start": "nodemon index.js 4005"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zeebox/highchart-to-image.git"
   },
   "keywords": [
     "highcharts",
