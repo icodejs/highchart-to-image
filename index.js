@@ -34,7 +34,7 @@ app.post('/convert', function(req, res) {
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(images);
     }, function (err) {
-        res.end('<div class="alert alert-error">' + err + '</div>');
+        res.end(500, err);
     });
 });
 
