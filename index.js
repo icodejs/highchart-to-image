@@ -33,7 +33,9 @@ app.post('/convert', function(req, res) {
         results.forEach(concatImageString);
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(images);
-    }, res.end);
+    }, function (err) {
+        res.end('<div class="alert alert-error">' + err + '</div>');
+    });
 });
 
 app.listen(Config.service.port);
@@ -55,12 +57,17 @@ var generateImage = function(form) {
             }
         };
 
-        http.request(options, function(res) {
+        var req = http.request(options, function(res) {
             res.on('data', function(chunk) { img += chunk; });
             res.on('end', function() {
                 def.resolve('<img src="data:image/png;base64,' + img  + '" />');
             });
-        }).on('error', def.reject).end(formString); // write to request
+        });
+        req.on('error', function (err) {
+            def.reject(err.toString());
+        });
+        req.write(formString);
+        req.end();
     };
 
     // START SERVER IF NOT ALREADY STARTED
@@ -75,7 +82,6 @@ var startImageServer = function(callback) {
     var childProcess = require('child_process');
     var phantomjs = require('phantomjs');
     var binPath = phantomjs.path;
-    var onExit = function(err, stdout, stderr) { alive = false; };
     var childArgs = [
         Config.phantomServer.scriptPath,
         '-host',
@@ -84,7 +90,12 @@ var startImageServer = function(callback) {
         Config.phantomServer.port
     ];
 
-    childProcess.execFile(binPath, childArgs, onExit);
+    childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
+        console.log(err);
+        console.log(stdout);
+        console.log(stderr);
+        alive = false;
+    });
 
     alive = true;
 
