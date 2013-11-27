@@ -1,0 +1,31 @@
+{
+  "name": "HighImage",
+  "version": "0.0.1",
+  "description": "Node service to render highchart charts as images.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "node_modules/.bin/mocha test/",
+    "start": "nodemon lib/highcharts/export.js 4000"
+  },
+  "keywords": [
+    "highcharts",
+    "image",
+    "export",
+    "node"
+  ],
+  "author": "Tahir Joseph",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "mocha": "~1.14.0",
+    "sinon": "~1.7.3",
+    "chai": "~1.8.1",
+    "sinon-chai": "~2.4.0"
+  },
+  "dependencies": {
+    "express": "~3.4.4",
+    "lodash": "~2.3.0",
+    "q": "~0.9.7",
+    "phantomjs": "~1.9.2-2"
+  }
+}
