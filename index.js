@@ -36,7 +36,7 @@ app.post('/convert', function(req, res) {
     }, res.end);
 });
 
-app.listen(4005);
+app.listen(Config.service.port);
 
 
 var generateImage = function(form) {
