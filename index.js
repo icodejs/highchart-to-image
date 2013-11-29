@@ -4,6 +4,7 @@ var express = require('express');
 var app = express();
 var Q = require('q');
 var Config = require('./config/config');
+var _ = require('lodash');
 var alive = false;
 
 app.configure(function() {
@@ -14,35 +15,65 @@ app.configure(function() {
 });
 
 
-app.post('/convert', function(req, res) {
-    var items = req.body;
-    var appendTempPath = function (o) {
-        var d = new Date();
-        o.outfile = 'tmp/' + d.getTime() + '.png';
-    };
-    var promises;
-
-    items.forEach(appendTempPath);
-
-    promises = items.map(generateImage);
-
-    Q.all(promises).done(function (results) {
-        var images = '';
-        var concatImageString = function(buf){ images += buf; };
-
-        results.forEach(concatImageString);
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(images);
-    }, function (err) {
-        res.end(500, err);
-    });
+app.post('/convert-html', function(req, res) {
+    convert(req, res, 'html');
 });
+
+
+app.post('/convert-base64', function(req, res) {
+    convert(req, res, 'base64');
+});
+
 
 app.listen(Config.service.port);
 
 
+var convert = function (req, res, type) {
+    var items = req.body;
+    var promises = _.chain(items).each(extendProps).map(generateImage).value();
+
+    Q.all(promises).done(function (results) {
+        if (/html/i.test(type)) returnAsHtml(res, results);
+        else returnAsJSON(res, results);
+    }, function (err) {
+        res.end(500, err);
+    });
+};
+
+
+var extendProps = function (o) {
+    var d = new Date();
+    _.extend(o, {
+        outfile: 'tmp/' + d.getTime() + '.png',
+        constr: "Chart",
+        type: "image/png",
+        scale: 4
+    });
+};
+
+
+var returnAsHtml = function (res, results) {
+    var images = '';
+    var _concat = function(buf){ images += '<img src="data:image/png;base64,' + buf + '" />'; };
+
+    results.forEach(_concat);
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(images);
+};
+
+
+var returnAsJSON = function (res, results) {
+    var images = [];
+    var _concat = function(buf){ images.push(buf); };
+
+    results.forEach(_concat);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(images));
+};
+
+
 var generateImage = function(form) {
-    var img = '';
+    var b64ImageString = '';
     var def = Q.defer();
     var run = function() {
         var formString = JSON.stringify(form);
@@ -57,14 +88,10 @@ var generateImage = function(form) {
         };
 
         var req = http.request(options, function(res) {
-            res.on('data', function(chunk) { img += chunk; });
-            res.on('end', function() {
-                def.resolve('<img src="data:image/png;base64,' + img  + '" />');
-            });
+            res.on('data', function(chunk){ b64ImageString += chunk; });
+            res.on('end', function(){ def.resolve(b64ImageString); });
         });
-        req.on('error', function (err) {
-            def.reject(err.toString());
-        });
+        req.on('error', function(err){ def.reject(err.toString()); });
         req.write(formString);
         req.end();
     };

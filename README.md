@@ -26,22 +26,34 @@ cd into root:
 
 ##Usage
 
+###Endpoints
+
+    /convert-html
+
+Returns HTML: <img src="data:image/png;base64,<<base64 image string>>" />
+
+    /convert-base64
+
+Returns JSON Array: [<<base64 image string>>]
+
 ###Curl
 
-    $ curl -H "Content-Type: application/json" -i -X POST -d '<<payload>>'  http://localhost:4005/convert
+    $ curl -H "Content-Type: application/json" -i -X POST -d '<<payload>>'  http://localhost:4005/convert-html
 
 ###jQuery AJAX
-    $.ajax({
-        url: '/convert',
-        type: 'POST',
-        dataType: 'html',
-        contentType: 'application/json',
-        data: JSON.stringify(<<payload>>),
-    }).done(function(html) {
-        $result.html(html);
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-        $result.html(errorThrown);
-    });
+      $.ajax({
+          url: '/convert-html',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify([data, data]),
+      }).done(function(result) {
+          var output = JSON.stringify(data, null, '\t');
+          $result.html(result);
+          $output.find('pre').text(output);
+          console.log(result);
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+          $result.html(errorThrown);
+      });
 
 ###Web form
 
@@ -50,10 +62,9 @@ Open: http://localhost:4005/index.html
 ###Payload Example
 
     [{
-      constr: "Chart",
-      type: "image/png",
-      width: 750,
-      scale: 4,
+      constr: "Chart", // optional
+      width: 750, // optional
+      scale: 4, // optional
       infile: {
         chart: {
           type: 'spline',
