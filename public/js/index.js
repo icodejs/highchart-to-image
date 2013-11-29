@@ -21,7 +21,7 @@ $(function () {
         };
 
         $.ajax({
-            url: '/convert',
+            url: '/convert-html',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify([data, data]),
