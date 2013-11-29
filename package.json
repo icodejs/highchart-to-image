@@ -1,6 +1,6 @@
 {
   "name": "Highcharts-to-image",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Node service to render highchart charts as images.",
   "main": "index.js",
   "private": true,
