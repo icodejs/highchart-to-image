@@ -6,6 +6,7 @@ var Q = require('q');
 var Config = require('./config/config');
 var _ = require('lodash');
 var alive = false;
+var healthCheck = require('./lib/healthCheck');
 
 app.configure(function() {
     app.use(express.bodyParser());
@@ -23,6 +24,9 @@ app.post('/convert-html', function(req, res) {
 app.post('/convert-base64', function(req, res) {
     convert(req, res, 'base64');
 });
+
+
+app.get('/healthcheck', healthCheck.status);
 
 
 app.listen(Config.service.port);
