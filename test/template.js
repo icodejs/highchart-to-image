@@ -1,3 +1,7 @@
+
+/* jshint expr:true */
+
+/*
 var chai = require('chai');
 var sinon_chai = require("sinon-chai");
 var expect = chai.expect;
@@ -9,3 +13,4 @@ describe('test', function () {
         expect(true).to.equal(true);
     });
 });
+*/
