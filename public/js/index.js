@@ -24,7 +24,7 @@ $(function () {
             url: '/convert-html',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify([data, data]),
+            data: JSON.stringify([data, data]), // send (n) configs for each chart
         }).done(function(result) {
             var output = JSON.stringify(data, null, '\t');
             $result.html(result);
