@@ -58,6 +58,7 @@ describe('lib/convert', function() {
                     else {
                         expect(b64ImageString.length > 1).to.equal(true);
                         expect(b64ImageString.indexOf('<img') > -1).to.equal(true);
+                        expect(b64ImageString).to.contain(Data.highcharts.base64Image);
                     }
                     done();
                 });
@@ -67,8 +68,11 @@ describe('lib/convert', function() {
                 testRequest('/convert-base64', function (err, b64ImageString) {
                     if (err) throw err;
                     else {
-                        expect(b64ImageString.length > 1).to.equal(true);
-                        expect(JSON.parse(b64ImageString)).to.be.instanceof(Array);
+                        var results = JSON.parse(b64ImageString);
+                        expect(results.length > 0).to.equal(true);
+                        expect(results).to.be.instanceof(Array);
+                        expect(results[0].length > 0).to.equal(true);
+                        expect(results[0]).to.equal(Data.highcharts.base64Image);
                     }
                     done();
                 });
