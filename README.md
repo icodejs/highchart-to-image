@@ -22,7 +22,7 @@ cd into root:
 
 ###Start server
 
-    $ node index.js
+    $ npm start
 
 ##Usage
 
@@ -49,22 +49,20 @@ $.ajax({
     contentType: 'application/json',
     data: JSON.stringify([data, data]), // send (n) configs for each chart
 }).done(function(results) {
-    var output = JSON.stringify(data, null, '\t');
     $result.empty();
-
     for (var i = 0; i < results.length; i++) {
         $result.append(results[0]);
     }
+
+    var output = JSON.stringify(data, null, '\t');
     $output.find('pre').text(output);
-    console.log(results);
 }).fail(function(jqXHR, textStatus, errorThrown) {
     $result.html(errorThrown);
 });
 
 ```
 ###Web form
-
-Open: http://localhost:4005/index.html
+Open in browser: http://localhost:4005/
 
 ###Payload Example
 ```json
@@ -131,4 +129,4 @@ Open: http://localhost:4005/index.html
   }
 }]
 ```
-[Above payload example](http://www.highcharts.com/demo/spline-inverted)
+[Highcharts](http://www.highcharts.com/demo/spline-inverted)
