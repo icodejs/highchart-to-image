@@ -28,9 +28,11 @@ cd into root:
 
 ###Endpoints
 
-    /convert-html  //Returns HTML: <img src="data:image/png;base64,<<base64 image string>>" />
+    /convert-html  // Returns HTML: <img src="data:image/png;base64,<<base64 image string>>" />
 
     /convert-base64  // Returns JSON Array of base64 encoded strings
+
+    /heathcheck // Return 200 OK if all endpoints are doing their job correctly
 
 ###Curl
 
