@@ -43,23 +43,23 @@ cd into root:
 ###jQuery AJAX
 ```javascript
 
-  $.ajax({
-      url: '/convert-html',
-      type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify([data, data]), // send (n) configs for each chart
-  }).done(function(results) {
-      var output = JSON.stringify(data, null, '\t');
-      $result.empty();
+$.ajax({
+    url: '/convert-html',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify([data, data]), // send (n) configs for each chart
+}).done(function(results) {
+    var output = JSON.stringify(data, null, '\t');
+    $result.empty();
 
-      for (var i = 0; i < results.length; i++) {
-          $result.append(results[0]);
-      }
-      $output.find('pre').text(output);
-      console.log(results);
-  }).fail(function(jqXHR, textStatus, errorThrown) {
-      $result.html(errorThrown);
-  });
+    for (var i = 0; i < results.length; i++) {
+        $result.append(results[0]);
+    }
+    $output.find('pre').text(output);
+    console.log(results);
+}).fail(function(jqXHR, textStatus, errorThrown) {
+    $result.html(errorThrown);
+});
 
 ```
 ###Web form
