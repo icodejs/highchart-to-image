@@ -129,6 +129,6 @@ Open: http://localhost:4005/index.html
       ]
     }]
   }
-}];
+}]
 ```
 [Above payload example](http://www.highcharts.com/demo/spline-inverted)
