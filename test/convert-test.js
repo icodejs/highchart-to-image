@@ -11,6 +11,8 @@ var server = require('./server');
 
 chai.use(sinon_chai);
 
+process.env.NODE_ENV = 'test';
+
 describe('lib/convert', function() {
 
     describe('converting a chart to an image', function () {

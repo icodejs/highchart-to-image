@@ -8,6 +8,8 @@ var Config = require('../config/config');
 
 chai.use(sinon_chai);
 
+process.env.NODE_ENV = 'test';
+
 describe('config/config', function () {
     it('should contain the relevant keys', function () {
         expect(Config).to.not.be.undefined;
