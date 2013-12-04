@@ -56,9 +56,10 @@ describe('lib/convert', function() {
                 testRequest('/convert-html', function (err, b64ImageString) {
                     if (err) throw err;
                     else {
-                        expect(b64ImageString.length > 1).to.equal(true);
-                        expect(b64ImageString.indexOf('<img') > -1).to.equal(true);
-                        expect(b64ImageString).to.contain(Data.highcharts.base64Image);
+                        var results = JSON.parse(b64ImageString);
+                        expect(results.length > 0).to.equal(true);
+                        expect(results[0].indexOf('<img') > -1).to.equal(true);
+                        expect(results[0]).to.contain(Data.highcharts.base64Image);
                     }
                     done();
                 });
@@ -82,8 +83,9 @@ describe('lib/convert', function() {
                 testRequest('/convert-svg', function (err, b64ImageString) {
                     if (err) throw err;
                     else {
-                        expect(b64ImageString.length > 1).to.equal(true);
-                        expect(b64ImageString.indexOf('<svg') > -1).to.equal(true);
+                        var results = JSON.parse(b64ImageString);
+                        expect(results.length > 0).to.equal(true);
+                        expect(results[0].indexOf('<svg version=') > -1).to.equal(true);
                     }
                     done();
                 });

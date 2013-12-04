@@ -25,11 +25,15 @@ $(function () {
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify([data, data]), // send (n) configs for each chart
-        }).done(function(result) {
+        }).done(function(results) {
             var output = JSON.stringify(data, null, '\t');
-            $result.html(result);
+            $result.empty();
+
+            for (var i = 0; i < results.length; i++) {
+                $result.append(results[0]);
+            }
             $output.find('pre').text(output);
-            console.log(result);
+            console.log(results);
         }).fail(function(jqXHR, textStatus, errorThrown) {
             $result.html(errorThrown);
         });
