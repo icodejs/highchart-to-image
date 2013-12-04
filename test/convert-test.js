@@ -77,6 +77,17 @@ describe('lib/convert', function() {
                     done();
                 });
             });
+
+            it('should return an array of svg strings', function(done) {
+                testRequest('/convert-svg', function (err, b64ImageString) {
+                    if (err) throw err;
+                    else {
+                        expect(b64ImageString.length > 1).to.equal(true);
+                        expect(b64ImageString.indexOf('<svg') > -1).to.equal(true);
+                    }
+                    done();
+                });
+            });
         });
 
     });

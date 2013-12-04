@@ -12,6 +12,7 @@ module.exports = (function () {
             app.use(express.bodyParser());
             app.post('/convert-html', convert.toHTML);
             app.post('/convert-base64', convert.toBase64);
+            app.post('/convert-svg', convert.toSVG);
 
             server = app.listen(Config.service.port);
         },
