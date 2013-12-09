@@ -15,6 +15,7 @@ app.configure(function() {
 app.post('/convert-svg', convert.toSVG); // returns array of svg strings
 app.post('/convert-html', convert.toHTML); // returns n base64 images as HTML
 app.post('/convert-base64', convert.toBase64); // returns array of base64 strings
+app.post('/convert-image', convert.toImage); // returns image
 app.get('/healthcheck', healthCheck.status);
 
 app.listen(Config.service.port);

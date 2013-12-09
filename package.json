@@ -19,7 +19,6 @@
     "node"
   ],
   "author": "Tahir Joseph",
-  "license": "BSD-2-Clause",
   "devDependencies": {
     "mocha": "~1.14.0",
     "sinon": "~1.7.3",
